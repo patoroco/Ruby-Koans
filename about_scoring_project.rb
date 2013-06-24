@@ -32,26 +32,25 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 def score(dice)
   result = 0
 
-  cincos = (dice.find_all { |item| item == 5}).count
-
-  if (cincos >= 3)
-    result += 500
-    cincos -= 3
+  (1..6).each do |search_number|
+    if (search_number == 1)
+      suma_tres = 1000
+      suma_resto = 100
+    elsif (search_number == 5)
+      suma_tres = 500
+      suma_resto = 50
+    else
+      suma_tres = search_number * 100
+      suma_resto = 0
+    end
+    coincidencias = (dice.find_all{ |item| item == search_number}).count
+    if coincidencias >= 3
+      result += suma_tres
+      coincidencias -= 3
+    end
+    result += suma_resto * coincidencias
   end
-  result += cincos * 50
   
-  unos = (dice.find_all {|item| item == 1}).count
-  if (unos >= 3)
-    result += 1000
-    unos -= 3
-  end
-  result += unos * 100
-
-  [2,3,4,6].each do |search_number|
-    coincidences = (dice.find_all {|item| item == search_number}).count
-    result += search_number * 100 if coincidences >= 3
-  end
-
   result
 end
 
