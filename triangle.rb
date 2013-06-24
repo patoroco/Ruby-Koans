@@ -13,7 +13,14 @@
 # and
 #   about_triangle_project_2.rb
 #
+
 def triangle(a, b, c)
+  raise TriangleError.new("Triangulo incorrecto") if [a,b,c].min <= 0
+
+  if (a+b<=c || a+c<=b || b+c<=a)
+  	raise TriangleError.new("Triangulo malo!")
+  end
+
   if (a == b && b == c)
   	:equilateral
   elsif (a == b || a == c || b == c)
