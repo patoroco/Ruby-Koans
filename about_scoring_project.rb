@@ -30,7 +30,29 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 # Your goal is to write the score method.
 
 def score(dice)
-  # You need to write this method
+  result = 0
+
+  cincos = (dice.find_all { |item| item == 5}).count
+
+  if (cincos >= 3)
+    result += 500
+    cincos -= 3
+  end
+  result += cincos * 50
+  
+  unos = (dice.find_all {|item| item == 1}).count
+  if (unos >= 3)
+    result += 1000
+    unos -= 3
+  end
+  result += unos * 100
+
+  [2,3,4,6].each do |search_number|
+    coincidences = (dice.find_all {|item| item == search_number}).count
+    result += search_number * 100 if coincidences >= 3
+  end
+
+  result
 end
 
 class AboutScoringProject < Neo::Koan
